@@ -1,0 +1,21 @@
+{% block pdf %}
+    {% for i in 1..data.paginas %}
+        <page backright="0mm" backtop="0mm" backbottom="0mm" backleft="0mm" backright="0mm" pageset="old">
+            {% for i_campo in 1..data.campos %}
+                <div 
+                    class="absolute m-0" 
+                    style="
+                        position: absolute;
+                        vertical-align: middle;
+                        top:{{attribute(data, 'x_'~ i_campo)}}mm; 
+                        left:{{attribute(data, 'y_'~ i_campo)}}mm;
+                        font-family: {{data.fuente}};
+                        font-weight: bold;
+                        font-size: {{data.medidaFuente}}px;
+                        color: {{data.color}};
+                    "
+                    >{{data.prefijo}} {{ data.digitos|format( (attribute(data, 'numero_i_'~ i_campo) - 1) + i )}} {{data.sufijo}}</div>
+            {% endfor %}
+        </page>
+    {% endfor %}
+{% endblock %}
