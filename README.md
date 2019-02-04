@@ -1,36 +1,40 @@
-# Generador de Numeros Consecutivos  
+# Generador de Números  Consecutivos  
 
 ## Introducción
-Una herramienta online para generar númeraciones consecutivas, crea un archivo PDF con las páginas indicadas, para fácilitar la impresión desde cualquier ubicación.
+Una herramienta online que permite configurar a detalle numeraciones consecutivas, genera un archivo PDF listo para imprimir según los parámetros establecidos.
 
-Trabaja sobre el núcleo de [Symfony4](http://symfony.com/), por lo que se recomienda instalar a través de composer.
+Por razones de rendimiento el PDF se limita a 250 páginas, con un máximo de 8 campos numéricos. Puede clonar el proyecto y establecer su propio límite en su servidor. Se aprecia cualquier aporte :-)...  
 
-## Instalación (dev)  
+**[Prueba en marcha](https://bismarcksevilla.com/proyectos/numerador)**  
+**[Más información](https://bismarcksevilla.com/entrada/generador_de_numeros_consecutivos)**  
+
+* El formulario trabaja sobre el núcleo de [Symfony4](http://symfony.com/), por lo que se debe instalar a través de composer.  
+* El PDF se genera gracias a [spipu/html2pdf](https://github.com/spipu/html2pdf)  
+* Interfaz basada en [bootstrap4](https://getbootstrap.com/docs/4.2/getting-started/introduction)  
+
+## Instalación (dev)    
+0. **Requerido.**  
 a. [XAMPP con PHP 7.0.*](https://www.apachefriends.org/es/download.html)  
 b. [Composer](https://getcomposer.org/download/)  
 
-*Según el SO en uso*  
-
-## Inicializar  
-
-1. **Clonar Repositorio**   
+1. **Clonar Repositorio.**   
 ~~~  
 > git clone https://github.com/bismarcksevilla/pro-numerador.git  
 ~~~  
 
-2. **Instalar Proyecto**  
+2. **Instalar Proyecto.**  
 ~~~  
 > composer install  
 ~~~  
 
-3. **Inicie el servidor local integrado**  
+3. **Inicie el servidor local integrado.**  
 ~~~  
  > php bin/console server:run 
 ~~~  
 
-4. **Edite el Proyecto**  
+4. **Visualice, utilice o edite el proyecto :-)**  
 
-5. **Los cambios deben empujarse al repositorio**  
+5. **Recuerda enviar tus aportes.**  
 
 ~~~ 
 > git add .  
@@ -38,6 +42,5 @@ b. [Composer](https://getcomposer.org/download/)
 > git push  
  ~~~  
 
-*El directorio .vscode contiene la definición de tareas necesarias para inicializar el servidor integrado; Instale la extención AutoLaunch para automatizar el proceso.*   
-
- [http://127.0.0.1:8080](http://127.0.0.1:8080)
+**Nota para usuario de VSCode**  
+*El directorio .vscode contiene la definición de tareas necesarias para inicializar el servidor integrado; Instale la extensión  AutoLaunch para automatizar el proceso.*   
