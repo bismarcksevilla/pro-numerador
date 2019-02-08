@@ -5,7 +5,7 @@ Una herramienta online que permite configurar a detalle numeraciones consecutiva
 
 Por razones de rendimiento el PDF se limita a 250 páginas, con un máximo de 8 campos numéricos. Puede clonar el proyecto y establecer su propio límite en su servidor. Se aprecia cualquier aporte :-)...  
 
-**[Prueba en marcha](https://bismarcksevilla.com/proyectos/numerador)**  
+**[Prueba en marcha](https://bismarcksevilla.com/proyecto/numerador)** 
 **[Más información](https://bismarcksevilla.com/entrada/generador_de_numeros_consecutivos)**  
 
 * El formulario trabaja sobre el núcleo de [Symfony4](http://symfony.com/), por lo que se debe instalar a través de composer.  
