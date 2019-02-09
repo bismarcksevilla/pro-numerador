@@ -1,304 +1,308 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Generador de Numeros Consecutivos{% endblock %}
- 
 {% block body %}
-<section class="container-fluid">
-    <div class="row">
+<div class="container">
+    <div class="row mt-3">
         <div class="col-sm-9">
-
-            <div class="row">
-                <div class="col-sm-12  mt-5">
-                    <h2>Generador de Numeros Consecutivos</h2> 
-                </div>
-            </div>
-        
-            {{ form_start(form) }}
+            <section class="card card-body">
 
                 <div class="row">
-
                     <div class="col-sm-12">
-                        <p class="mb-0 text-bold">Establezca la configuración deseada:</p>
-                        <hr class="mt-0">
+                        <h1>Generador de Numeros Consecutivos PDF</h1> 
+                        <a href="https://bismarcksevilla.com/proyecto/numerador" target="_blank">Click aquí para más información.</a> <br>
+                        <a href="https://github.com/bismarcksevilla/pro-numerador" target="_blank"><i class="fab fa-github-alt"></i> Código Fuente en GitHub</a>
                     </div>
-                    
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Nombre de Perfil</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-lite">
-                                        <i class="fa fa-arrow-circle-right"></i>
-                                    </span>
-                                </div>
-                                {{ form_widget(form.nombre)}}
-                            </div>
-                        </div>
-                    </div> 
+                </div>
+            
+                {{ form_start(form) }}
 
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Campos</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-lite">
-                                        <i class="fa fa-columns"></i>
-                                    </span>
-                                </div>
-                                {{ form_widget(form.campos)}}
-                            </div>
-                        </div> 
-                    </div> 
-                        
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Total de Paginas</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-lite">
-                                        <i class="fa fa-files-o"></i>
-                                    </span>
-                                </div>
-                                {{ form_widget(form.paginas)}}
-                            </div>
-                        </div>
-                    </div> 
+                    <div class="row mt-3">
 
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Color</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-lite">
-                                        <i class="fa fa-paint-brush"></i>
-                                    </span>
-                                </div>
-                                {{ form_widget(form.color)}}
-                            </div>
-                        </div> 
-                    </div>  
-
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Fuente</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-lite">
-                                        <i class="fa fa-font"></i>
-                                    </span>
-                                </div>
-                                {{ form_widget(form.fuente)}}
-                            </div>
-                        </div>
-                    </div>  
-
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Tamaño Fuente</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-lite">
-                                        <i class="fa fa-compress"></i>
-                                    </span>
-                                </div>
-                                {{ form_widget(form.medidaFuente)}}
-                            </div>
-                        </div> 
-                    </div>  
-
-                    <div class="col-sm-3"> 
-                        <div class="form-group">
-                            <label>Medida Página</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-lite">
-                                        <i class="fa fa-file-text"></i>
-                                    </span>
-                                </div>
-                                {{ form_widget(form.medidaPagina)}}
-                            </div>
-                        </div>
-                    </div>  
-
-                    <div class="col-sm-3"> 
-                        <div class="form-group">
-                            <label>Prefijo</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-lite">
-                                        <i class="fa fa-chevron-circle-left"></i>
-                                    </span>
-                                </div>
-                                {{ form_widget(form.prefijo)}}
-                            </div>
-                        </div>
-                    </div>  
-
-                    <div class="col-sm-3"> 
-                        <div class="form-group">
-                            <label>Sufijo</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-lite">
-                                        <i class="fa fa-chevron-circle-right"></i>
-                                    </span>
-                                </div>
-                                {{ form_widget(form.sufijo)}}
-                            </div>
-                        </div>
-                    </div>  
-
-                    <div class="col-sm-3"> 
-                        <div class="form-group">
-                            <label>Digitos</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-lite">|0</span>
-                                </div>
-                                {{ form_widget(form.digitos)}}
-                            </div>
-                        </div>
-                    </div>  
-
-                    <div class="col-sm-3"> 
-                        <div class="form-group">
-                            <label>Orientación</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-lite">
-                                        <i class="fa fa-file-o"></i>
-                                    </span>
-                                </div>
-                                {{ form_widget(form.orientacion)}}
-                            </div>
-                        </div>
-                    </div>  
-                        
-                </div> 
-
-                {# <div class="row" style="margin-bottom:-50px;">
-                    <div class="col-sm-12 text-center">
-                        <canvas class="img-thumbnail img-fluid" id="preview" style="width:100%;"></canvas>
-                    </div>
-                </div> #}
-
-                    
-                <div class="card card-body sombra">
-                    <div class="row">
                         <div class="col-sm-12">
-                            <p class="mb-0 text-bold">Personalice los campos:</p>
+                            <p class="mb-0 text-bold">Establezca la configuración deseada:</p>
                             <hr class="mt-0">
                         </div>
+                        
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Nombre de Perfil</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-lite">
+                                            <i class="fa fa-arrow-circle-right"></i>
+                                        </span>
+                                    </div>
+                                    {{ form_widget(form.nombre)}}
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Campos</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-lite">
+                                            <i class="fa fa-columns"></i>
+                                        </span>
+                                    </div>
+                                    {{ form_widget(form.campos)}}
+                                </div>
+                            </div> 
+                        </div> 
+                            
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Total de Paginas</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-lite">
+                                            <i class="fa fa-copy"></i>
+                                        </span>
+                                    </div>
+                                    {{ form_widget(form.paginas)}}
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Color</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-lite">
+                                            <i class="fa fa-paint-brush"></i>
+                                        </span>
+                                    </div>
+                                    {{ form_widget(form.color)}}
+                                </div>
+                            </div> 
+                        </div>  
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Fuente</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-lite">
+                                            <i class="fa fa-font"></i>
+                                        </span>
+                                    </div>
+                                    {{ form_widget(form.fuente)}}
+                                </div>
+                            </div>
+                        </div>  
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Tamaño Fuente</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-lite">
+                                            <i class="fa fa-compress"></i>
+                                        </span>
+                                    </div>
+                                    {{ form_widget(form.medidaFuente)}}
+                                </div>
+                            </div> 
+                        </div>  
+
+                        <div class="col-sm-3"> 
+                            <div class="form-group">
+                                <label>Medida Página</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-lite">
+                                            <i class="fa fa-file-archive"></i>
+                                        </span>
+                                    </div>
+                                    {{ form_widget(form.medidaPagina)}}
+                                </div>
+                            </div>
+                        </div>  
+
+                        <div class="col-sm-3"> 
+                            <div class="form-group">
+                                <label>Prefijo</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-lite">
+                                            <i class="fa fa-chevron-circle-left"></i>
+                                        </span>
+                                    </div>
+                                    {{ form_widget(form.prefijo)}}
+                                </div>
+                            </div>
+                        </div>  
+
+                        <div class="col-sm-3"> 
+                            <div class="form-group">
+                                <label>Sufijo</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-lite">
+                                            <i class="fa fa-chevron-circle-right"></i>
+                                        </span>
+                                    </div>
+                                    {{ form_widget(form.sufijo)}}
+                                </div>
+                            </div>
+                        </div>  
+
+                        <div class="col-sm-3"> 
+                            <div class="form-group">
+                                <label>Digitos</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-lite">|0</span>
+                                    </div>
+                                    {{ form_widget(form.digitos)}}
+                                </div>
+                            </div>
+                        </div>  
+
+                        <div class="col-sm-3"> 
+                            <div class="form-group">
+                                <label>Orientación</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-lite">
+                                            <i class="fa fa-file"></i>
+                                        </span>
+                                    </div>
+                                    {{ form_widget(form.orientacion)}}
+                                </div>
+                            </div>
+                        </div>  
+                            
                     </div> 
 
-                    {% for i in 1..campos %}
+                    {# <div class="row" style="margin-bottom:-50px;">
+                        <div class="col-sm-12 text-center">
+                            <canvas class="img-thumbnail img-fluid" id="preview" style="width:100%;"></canvas>
+                        </div>
+                    </div> #}
+
+                        
+                    <div class="card card-body sombra">
                         <div class="row">
+                            <div class="col-sm-12">
+                                <p class="mb-0 text-bold">Personalice los campos:</p>
+                                <hr class="mt-0">
+                            </div>
+                        </div> 
 
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label>Etiqueta</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-lite">
-                                                <i class="fa fa-tag"></i>
-                                            </span>
-                                        </div>
-                                        {{ form_widget(attribute(form, 'etiqueta_'~ i)) }}
-                                    </div>
-                                </div>
-                            </div> 
+                        {% for i in 1..campos %}
+                            <div class="row">
 
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label>Numero Inicial</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-lite text-bold">#</span>
-                                        </div>
-                                        {{ form_widget(attribute(form, 'numero_i_'~ i)) }}
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-lite">
-                                                <i class="fa fa-chevron-right"></i>
-                                            </span>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Etiqueta</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-lite">
+                                                    <i class="fa fa-tag"></i>
+                                                </span>
+                                            </div>
+                                            {{ form_widget(attribute(form, 'etiqueta_'~ i)) }}
                                         </div>
                                     </div>
-                                </div>
-                            </div> 
+                                </div> 
 
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label>Posición y</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-lite text-bold">Y</span>
-                                        </div>
-                                        {{ form_widget(attribute(form, 'y_'~ i)) }}
-                                        <div class="input-group-append">
-                                            <span class="input-group-text bg-lite">mm</span>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Numero Inicial</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-lite text-bold">#</span>
+                                            </div>
+                                            {{ form_widget(attribute(form, 'numero_i_'~ i)) }}
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-lite">
+                                                    <i class="fa fa-chevron-right"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div> 
+                                </div> 
 
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label>Posición x</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-lite text-bold">X</span>
-                                        </div>
-                                        {{ form_widget(attribute(form, 'x_'~ i)) }}
-                                        <div class="input-group-append">
-                                            <span class="input-group-text bg-lite">mm</span>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Posición y</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-lite text-bold">Y</span>
+                                            </div>
+                                            {{ form_widget(attribute(form, 'y_'~ i)) }}
+                                            <div class="input-group-append">
+                                                <span class="input-group-text bg-lite">mm</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div> 
+                                </div> 
+
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Posición x</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-lite text-bold">X</span>
+                                            </div>
+                                            {{ form_widget(attribute(form, 'x_'~ i)) }}
+                                            <div class="input-group-append">
+                                                <span class="input-group-text bg-lite">mm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                        {% endfor %}
+                    </div> 
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="btn-group mt-4"   role="group">
+                                                            
+
+                                    {{ form_widget(form.guardar) }} 
+
+                                    <a class="btn btn-dark" href="{{url('proyecto_numerador')}}"> Nuevo</a>
+
+                                {% if slug %}
+                                    <a class="btn btn-danger" href="{{url('proyecto_numerador_pdf',{"slug":slug})}}" target="_blank">PDF</a>
+                                {% endif %}
+                            </div>
                         </div>
-                    {% endfor %}
-                </div> 
+                    </div>  
+                {{ form_end(form) }} 
 
+                <hr>
 
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="btn-group mt-4">
-
-                            {{ form_widget(form.guardar) }}
-
-                            <a class="btn btn btn-secondary" href="{{url('tools_numerador_config')}}"><i class="fa fa-refresh"></i> Nuevo</a>
-                            {% if slug %}
-                                <a class="btn btn btn-danger" href="{{url('tools_numerador_pdf',{"slug":slug})}}" target="_blank"><i class="fa fa-file-pdf-o"></i> Generar PDF</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>  
-            {{ form_end(form) }} 
-
-            <hr>
-
-            <p class="small m-0">Creado con <i class="fa fa-heart"></i> por Bismarck Sevilla | contacto@bismarcksevilla.com | 02/2019</p>
+                <p class="small m-0">Creado con <i class="fa fa-heart"></i> por Bismarck Sevilla | contacto@bismarcksevilla.com | 02/2019</p>
+            </section>
         </div>
-
         <div class="col-sm-3">
-            <div class="card card-body mt-5">
+            <aside class="card card-body">
                 <p class="text-bold m-0 p-0">Perfiles recientes:</p>
                 <ul class="list-group">
                     {% for a in lista|reverse  %}
                         <li class="">
                             <hr class="col-sm-12">
-                            <a class="text-left" href="{{url('tools_numerador_config',{'slug': a.relativePathname|replace({".json":""}) })}}" title="click para cargar este perfil">
+                            <a class="text-left" href="{{url('proyecto_numerador',{'slug': a.relativePathname|replace({".json":""}) })}}" title="click para cargar este perfil">
                                 <p class="m-0 text-bold"><i class="fa fa-arrow-circle-right"></i> {{a.relativePathname|replace({".json":""})}}</p>
                             </a>
                             <p class="m-0">
                                 <small class="badge badge-dark">{{a.mTime|date}}</small>
-                                <a href="{{url('tools_numerador_borrar',{ 'slug':a.relativePathname|replace({".json":""}) })}}" class="color-red" title="click para eliminar este perfil" onClick="return confirm('¿Seguro que desea eliminar este perfil?')"><i class="fa fa-trash color-danger"></i></a>
+                                <a href="{{url('proyecto_numerador_borrar',{ 'slug':a.relativePathname|replace({".json":""}) })}}" class="color-red" title="click para eliminar este perfil" onClick="return confirm('¿Seguro que desea eliminar este perfil?')"><i class="fa fa-trash color-danger"></i></a>
                             </p>
                         </li>
                     {% endfor %}
                 </ul>
-            </div>
+            </aside>
         </div>
-
     </div>
-</section>
+</div> 
+
+
 {% endblock %}

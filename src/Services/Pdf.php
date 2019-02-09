@@ -7,18 +7,23 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
-* Identificar Fechas
-*/
+ * generar PDF fácil 
+ */
 class Pdf
 {
-
     /**
-     * @param int $d
-     * @return string
+     * Parametros de configuración
+     * @param string [$nombre_o_path] // Depende de la salida 
+     * @param string [$html] // html generado por twig
+     * @param string [$salida] // Tipo de salida del PDF: I (En Línea), D(Descargar), F(Guardar en path)
+     * @param array [$margenes] // Al borde del PDF
+     * @param string [$medida] // Medid de página soportado por la libreria Html2Pdf ('LETTER','OFFICE', etc)
+     * @param string [$orientar] // Horizontal (P) o Vertical (L)
+     * @return object
      */
-    public function __construct( $nombre_o_path=false, $twig=false, $display="I" ,$margin=[0, 0, 0, 0], $size='LETTER', $h='P'  )
+    public function __construct( $nombre_o_path, $html, $display="I" ,$margenes=[0, 0, 0, 0], $medida='LETTER', $orientar='P'  )
     {
-        $PDF  =  new  Html2Pdf( $h, $size, 'es', true, 'UTF-8', $margin );
+        $PDF  =  new  Html2Pdf( $orientar, $medida, 'es', true, 'UTF-8', $margenes );
         $PDF->pdf->SetAuthor('Bismarck Sevilla');
         $PDF->pdf->SetTitle( $this->LimpiarNombre($nombre_o_path) );
         $PDF->pdf->SetDisplayMode('real');
@@ -26,8 +31,7 @@ class Pdf
         $PDF->addFont('courierB', 'bold', 'courierB');
         $PDF->addFont('helvetica', 'normal', 'helvetica');
         $PDF->setDefaultFont('helvetica');
-        $PDF->writeHTML( $twig );
-
+        $PDF->writeHTML( $html );
         return $PDF->output( $nombre_o_path , $display);
     } #END
 
@@ -36,18 +40,14 @@ class Pdf
      * Salida PDF
      */
     public static function Out($path){
-
         $response = new BinaryFileResponse( $path );
-
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_INLINE,
             self::LimpiarNombre($path)
         );
-
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Pragma', 'public');
         $response->headers->set('Content-Disposition', $disposition);
-
         return $response;
     }
     
@@ -67,5 +67,4 @@ class Pdf
             return $nombre_o_path;
         endif;
     }
-
 } # :)

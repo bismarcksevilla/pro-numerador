@@ -6,10 +6,12 @@ namespace App\Services;
  */
 class Token
 {
+    /**
+     * Limpiar slug
+     */
+    public static function slug( $str, $delimitador = '_' ){
 
-    public static function slug( $str, $delimiter = '_' ){
-
-        $unwanted_array = [
+        $a_reemplazar = [
             'ś'=>'s', 'ą' => 'a', 'ć' => 'c',
             'ę' => 'e', 'ł' => 'l', 'ń' => 'n', 'ó' => 'o',
             'ź' => 'z', 'ż' => 'z', 'Ś'=>'s', 'Ą' => 'a',
@@ -17,23 +19,24 @@ class Token
             'Ó' => 'o', 'Ź' => 'z', 'Ż' => 'z'
         ];
 
-        $str = strtr( $str, $unwanted_array );
+        $str = strtr( $str, $a_reemplazar );
 
         $slug = strtolower(
             trim(
-                preg_replace('/[\s-]+/', $delimiter,
-                    preg_replace('/[^A-Za-z0-9-]+/', $delimiter,
+                preg_replace('/[\s-]+/', $delimitador,
+                    preg_replace('/[^A-Za-z0-9-]+/', $delimitador,
                         preg_replace('/[&]/', 'y',
                             preg_replace('/[\']/', '', iconv('UTF-8', 'ASCII//TRANSLIT', $str))
                         )
                     )
-                ), $delimiter
+                ), $delimitador
             )
         );
+        
         return $slug;
     }
-
-
+    
+    
     /**
      * Generar token con cantidad determinada de letras.
      */
@@ -41,13 +44,10 @@ class Token
     {
         if($car=='L'):
             $caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
         elseif($car=='l'):
             $caracteres = "abcdefghijklmnopqrstuvwxyz";
-
         elseif($car=='N'):
             $caracteres = "123456789";
-
         else:
             $caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
         endif;
@@ -60,17 +60,4 @@ class Token
 
         return $cadena;
     }
-
-
-    /**
-     * Genera sha512 del termino.
-     */
-    public static function sha512( $termino )
-    {
-        $termino= trim($termino);
-        $context =  hash_init('sha512', HASH_HMAC, 'EqGITwSwnm' );
-        hash_update($context, $termino);
-        return hash_final($context);
-    }
-
-} # END FUNCTION :)
+} # END 

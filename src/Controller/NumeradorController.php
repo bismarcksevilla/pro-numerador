@@ -1,15 +1,10 @@
 <?php
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-
-// use Symfony\Component\HttpFoundation\Response;
-// use Doctrine\Common\Collections\ArrayCollection;
-
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-// use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -20,35 +15,34 @@ use Symfony\Component\Finder\Finder;
  
 use App\Services\Pdf;
 use App\Services\Token;
- 
-class NumeradorController extends Controller
+
+class NumeradorController extends AbstractController
 {
+    private $path       = "proyecto/numerador/";
+    private $maxReg     = 250;
+
     /**
-     * @Route("/{slug}", name="tools_numerador_config",
+     * @Route("/{slug}", name="proyecto_numerador",
      *      requirements={
-     *          "slug"="[a-zA-Z0-9_]{0,30}"
+     *          "slug"="[a-zA-Z0-9_-]{0,80}"
      *      }
      * )
-     * @Route("/", name="index")
      */
     public function generadorAction(Request $request, $slug=false)
     {
-
-        if ($slug){
-            $data = $this->getJson($slug);
-        }else{
+        if ( !$slug || !$data=$this->getJson($slug) ){
             
             $data = new \stdClass();
-            $data->nombre = (new \DateTime('now'))->format('YmdH').Token::generar(3,"N");
+            $data->nombre = $slug?$slug:(new \DateTime('now'))->format('YmdH').Token::generar(3,"N");
             $data->campos= 2;
             $data->medidaFuente= 15;
-            $data->paginas= 50;
+            $data->paginas= 1;
             $data->prefijo="No. ";
             $data->sufijo=null;
             $data->fuente=null;
             $data->digitos=4;
             $data->medidaPagina=null;
-            $data->orientacion="L";
+            $data->orientacion="P";
             $data->color= "red";
             $data->numero_i_1 = 1;
         }
@@ -85,8 +79,8 @@ class NumeradorController extends Controller
             'required' => true,
             'data' =>$data->paginas,
             'attr' => [
-                'scale' => 0,
-                'max' => 250,
+                'scale' => 1,
+                'max' => $this->maxReg,
                 'min' => 1,
                 'class' => 'form-control'
             ], 
@@ -271,18 +265,21 @@ class NumeradorController extends Controller
                     'class' => 'form-control'
                 ],
             ]);
-
         endfor; 
 
         $form->handleRequest($request);
 
         if ( $form->isSubmitted() && $form->isValid() ){ 
             try{
-                $fs = new Filesystem;
                 $slug = Token::slug($form["nombre"]->getData());
-                $fs->dumpFile( $this->getPath().$slug.".json", json_encode($form->getData()));
-                return $this->redirectToRoute('tools_numerador_config',['slug'=>$slug]);
-            }catch(IOException $e) {}
+
+                $fs = new Filesystem;
+                $fs->dumpFile( $this->getPath('json',$slug), json_encode($form->getData()));
+                $fs->remove(   $this->getPath('pdf', $slug));
+                return $this->redirectToRoute('proyecto_numerador',['slug'=>$slug]);
+            }catch(IOException $e) {
+                return $this->redirectToRoute('proyecto_numerador',['slug'=>$slug]);
+            }
         }
 
         return $this->render('numerador/configurar.html.twig',[
@@ -295,9 +292,9 @@ class NumeradorController extends Controller
 
 
     /**
-     * @Route("/pdf/{slug}", name="tools_numerador_pdf",
+     * @Route("/pdf/{slug}.pdf", name="proyecto_numerador_pdf",
      *      requirements={
-     *          "slug"="[a-zA-Z0-9_]{0,30}"
+     *          "slug"="[a-zA-Z0-9_-]{0,30}"
      *      }
      * )
      */
@@ -305,26 +302,41 @@ class NumeradorController extends Controller
     { 
         $data = $this->getJson($slug); 
 
-        $html_twig = $this->renderView('numerador/generar.pdf.twig',[
-            "data" => $data,
-        ]);
+        if( isset($data->paginas) && $data->paginas>0){
 
-        return new Pdf( $data->nombre.'.pdf', $html_twig, "I", [0,0,0,0], $data->medidaPagina,  $data->orientacion); //I, F
+            $path = $this->getPath('pdf', $slug);
+            
+            if(!file_exists( $path )){
+                try {
+                    $html_twig = $this->renderView('numerador/generar.pdf.twig',["data" => $data]);
+                } catch (\Throwable $th) {
+                    return $this->redirectToRoute('proyecto_numerador');
+                }
+                new Pdf( $path, $html_twig, "F", [0,0,0,0], $data->medidaPagina,  $data->orientacion); //I, F
+            }
+
+            // return $this->redirect($slug.".pdf");
+            return Pdf::out($path);        
+
+        }else{
+            return $this->redirectToRoute('proyecto_numerador');
+        }
     }
 
 
     /**
-     * @Route("/borrar/{slug}", name="tools_numerador_borrar",
+     * @Route("/borrar/{slug}", name="proyecto_numerador_borrar",
      *      requirements={
-     *          "slug"="[a-zA-Z0-9_]{0,30}"
+     *          "slug"="[a-zA-Z0-9_-]{0,30}"
      *      }
      * )
      */
-    public function borrarAction(Request $request, $slug=false)
+    public function borrarAction($slug=false)
     {
         $fs = new Filesystem;
-        $fs->remove( $this->getPath().$slug.".json" );
-        return $this->redirectToRoute('tools_numerador_config');
+        $fs->remove( $this->getPath('json', $slug));
+        $fs->remove( $this->getPath('pdf', $slug));
+        return $this->redirectToRoute('proyecto_numerador');
     }
 
 
@@ -338,9 +350,9 @@ class NumeradorController extends Controller
      * 
      * return array
      */
-    private function getJson($nombre)
+    private function getJson($slug)
     {
-        $path = $this->getPath().$nombre.".json";
+        $path = $this->getPath('json', $slug);
 
         if(file_exists($path)){
             
@@ -360,10 +372,7 @@ class NumeradorController extends Controller
     private function getLista()
     {
         $finder = new Finder();
-        return $finder->files()->in($this->getPath())->sortByModifiedTime();
-        // return $finder->files()->in($this->getPath())->sortByAccessedTime();
-        // return $finder->files()->in($this->getPath())->sortByChangedTime();
-        
+        return $finder->files()->in( $this->getPath('json'))->sortByModifiedTime();        
     } #
 
 
@@ -372,17 +381,25 @@ class NumeradorController extends Controller
      * 
      * return string
      */
-    private function getPath()
+    private function getPath($dir=false, $slug=false)
     {
-        $path =  "../public/json/";
+        if($dir=='json'){
 
+            $path =  "../public/".$this->path."json/";
+        }else if($dir=='pdf'){ 
+
+            $path = __DIR__ ."/../../public/".$this->path."pdf/";
+        }else{
+
+            $path =  $this->path;
+        }
+        
         if(!file_exists($path)){
+        // if(!is_dir(dirname($path))){
             $fs = new Filesystem;
             $fs->mkdir($path);
-            // $fs->dumpFile( $path );
         }
-
-        return $path;
+        if($slug) return $path.$slug.".".$dir;
+        else return $path;
     } #
-
 }
