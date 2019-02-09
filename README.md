@@ -9,7 +9,6 @@ Por razones de rendimiento el PDF se limita a 250 páginas, con un máximo de 8 
 **[Prueba en marcha](https://bismarcksevilla.com/proyecto/numerador)**  
 **[Más información](https://bismarcksevilla.com/entrada/generador-de-numeros-consecutivos)**  
 
-# Generador de Números  Consecutivos  
 ![icon](https://bismarcksevilla.com/images/uploads/2018/pro-numerador.jpg) 
 
 * El formulario trabaja sobre el núcleo de [Symfony4](http://symfony.com/), por lo que se debe instalar a través de composer.  
