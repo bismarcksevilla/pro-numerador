@@ -61,6 +61,10 @@
         }
     },
     "require-dev": {
+        "symfony/browser-kit": "4.2.*",
+        "symfony/css-selector": "4.2.*",
+        "symfony/phpunit-bridge": "4.2.*",
+        "symfony/test-pack": "^1.0",
         "symfony/web-server-bundle": "4.2.*"
     }
 }

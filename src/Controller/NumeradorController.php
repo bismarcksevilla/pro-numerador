@@ -16,6 +16,9 @@ use Symfony\Component\Finder\Finder;
 use App\Services\Pdf;
 use App\Services\Token;
 
+/**
+ * @Route("/proyecto/numerador")
+ */
 class NumeradorController extends AbstractController
 {
     private $path       = "proyecto/numerador/";
@@ -369,7 +372,7 @@ class NumeradorController extends AbstractController
      * 
      * return string | array
      */
-    private function getLista()
+    public function getLista()
     {
         $finder = new Finder();
         return $finder->files()->in( $this->getPath('json'))->sortByModifiedTime();        
@@ -381,7 +384,7 @@ class NumeradorController extends AbstractController
      * 
      * return string
      */
-    private function getPath($dir=false, $slug=false)
+    public function getPath($dir=false, $slug=false)
     {
         if($dir=='json'){
 

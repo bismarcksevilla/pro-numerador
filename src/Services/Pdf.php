@@ -55,7 +55,7 @@ class Pdf
     /**
      * Limpiar Nombre
      */
-    private function LimpiarNombre($nombre_o_path){
+    private static function LimpiarNombre($nombre_o_path){
 
         $n = explode('/',$nombre_o_path);
 
