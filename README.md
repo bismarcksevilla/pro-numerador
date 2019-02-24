@@ -1,6 +1,7 @@
 # Generador de Números  Consecutivos  
 
-[![Build Status](https://travis-ci.org/bismarcksevilla/pro-numerador.svg?branch=master)](https://travis-ci.org/bismarcksevilla/pro-numerador)  
+[![Build Status](https://travis-ci.org/bismarcksevilla/pro-numerador.svg?branch=master)](https://travis-ci.org/bismarcksevilla/pro-numerador)
+[![GitHub version](https://badge.fury.io/gh/bismarcksevilla%2Fpro-numerador.svg)](https://badge.fury.io/gh/bismarcksevilla%2Fpro-numerador)  
 
 ![icon](https://bismarcksevilla.com/images/uploads/numerado-pdf.jpg)  
 
