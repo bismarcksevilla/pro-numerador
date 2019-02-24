@@ -154,8 +154,9 @@ class NumeradorController extends AbstractController
         $form->add('medidaPagina', ChoiceType::class, [
             'choices'=>[
                 'Carta' =>'LETTER',
-                '1/16' =>'STATEMENT',
-                'LEGAL' =>'OFICE',
+                'Media Carta (5.5x8.5)' =>'STATEMENT',
+                'TABLOIDE (11x17)' =>'TABLOID',
+                'LEGAL (8.5x14)' =>'LEGAL',
             ],
             'data' =>$data->medidaPagina,
             'attr' => [ 
@@ -250,7 +251,7 @@ class NumeradorController extends AbstractController
                 'required' => false,
                 'attr' => [
                     'scale' => 2,
-                    'max' => 355.60,
+                    'max' => 430.50,
                     'min' => 0,
                     'step' =>0.5,
                     'class' => 'form-control'
@@ -262,7 +263,7 @@ class NumeradorController extends AbstractController
                 'required' => false,
                 'attr' => [
                     'scale' => 2,
-                    'max' => 355.60,
+                    'max' => 430.50,
                     'min' => 0,
                     'step' => 0.5,
                     'class' => 'form-control'
@@ -290,6 +291,8 @@ class NumeradorController extends AbstractController
             "lista" => $this->getLista(),
             "campos" => $campos,
             "slug" => $slug,
+            "visitas" => $this->agregarVisita('visitas_configurar'),
+            "pdf_generados" => $this->agregarVisita('pdf_generados', false),
         ]);
     }
 
@@ -318,7 +321,8 @@ class NumeradorController extends AbstractController
                 new Pdf( $path, $html_twig, "F", [0,0,0,0], $data->medidaPagina,  $data->orientacion); //I, F
             }
 
-            // return $this->redirect($slug.".pdf");
+            $this->agregarVisita('pdf_generados');
+
             return Pdf::out($path);        
 
         }else{
@@ -381,28 +385,55 @@ class NumeradorController extends AbstractController
 
     /**
      * Path al archivo de configuración
+     * @param string $dir
+     * @param string $slug
      * 
      * return string
      */
     public function getPath($dir=false, $slug=false)
     {
-        if($dir=='json'){
+        if($dir=='pdf'){ 
 
-            $path =  "../public/".$this->path."json/";
-        }else if($dir=='pdf'){ 
-
-            $path = __DIR__ ."/../../public/".$this->path."pdf/";
+            $path = __DIR__ ."/../../public/".$this->path.$dir."/";
         }else{
 
-            $path =  $this->path;
+            $path =  "../public/".$this->path.$dir."/";
         }
         
-        if(!file_exists($path)){
-        // if(!is_dir(dirname($path))){
+        if(!file_exists($path)){ 
             $fs = new Filesystem;
             $fs->mkdir($path);
         }
         if($slug) return $path.$slug.".".$dir;
         else return $path;
+    } #
+
+
+    /**
+     * Contador de visitas
+     * @param string $name
+     * @param bool $sumar
+     * 
+     * return int
+     */
+    private function agregarVisita($name, $sumar=true){
+
+        $path = $this->getPath('txt', $name);
+
+        if(file_exists($path)){
+            
+            $visitas = json_decode(file_get_contents($path));
+        }else{
+            $visitas = new \stdClass();
+            $visitas->visitas = 1;
+        }
+
+        if($sumar){
+            $visitas->visitas = $visitas->visitas + 1;
+            $fs = new Filesystem;
+            $fs->dumpFile( $path, json_encode($visitas));
+        } 
+
+        return $visitas->visitas; 
     } #
 }
